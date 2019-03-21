@@ -9,9 +9,9 @@ namespace safari_api.Controllers
   public class SearchController
   {
     [HttpGet]
-    public ActionResult<string> SearchAnimal([FromQuery] string query)
+    public ActionResult<string> SearchAnimal([FromQuery] string species)
     {
-      return query;
+      return species;
     }
   }
 }
