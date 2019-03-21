@@ -55,5 +55,15 @@ namespace safari_api.Controllers
       db.SaveChanges();
       return animal;
     }
+
+    [HttpDelete("{id}")]
+    public ActionResult DeleteAnimal(int id)
+    {
+      var db = new DatabaseContext();
+      var animal = db.Animals.FirstOrDefault(a => a.Id == id);
+      db.Animals.Remove(animal);
+      db.SaveChanges();
+      return Ok();
+    }
   }
 }
