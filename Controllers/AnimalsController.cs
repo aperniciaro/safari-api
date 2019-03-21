@@ -11,10 +11,16 @@ namespace safari_api.Controllers
   [ApiController]
   public class AnimalsController : ControllerBase
   {
+
+    private DatabaseContext db;
+    public AnimalsController()
+    {
+      this.db = new DatabaseContext();
+    }
+
     [HttpGet]
     public ActionResult<IEnumerable<Animal>> GetAnimals()
     {
-      var db = new DatabaseContext();
       var results = db.Animals.OrderBy(animal => animal.Species).ToList();
       return results;
     }
@@ -22,7 +28,6 @@ namespace safari_api.Controllers
     [HttpGet("{id}")]
     public ActionResult<Animal> GetAnimal(int id)
     {
-      var db = new DatabaseContext();
       var animal = db.Animals.FirstOrDefault(a => a.Id == id);
       return animal;
     }
@@ -30,17 +35,14 @@ namespace safari_api.Controllers
     [HttpPost]
     public ActionResult<Animal> AddAnimal([FromBody] Animal newAnimal)
     {
-      var db = new DatabaseContext();
       db.Animals.Add(newAnimal);
       db.SaveChanges();
-
       return newAnimal;
     }
 
     [HttpGet("{location}")]
     public ActionResult<IList<Animal>> GetLocation(string location)
     {
-      var db = new DatabaseContext();
       var animalsInLocation = db.Animals.
         Where(animal => animal.LocationOfLastSeen == location).ToList();
       return animalsInLocation;
@@ -49,7 +51,6 @@ namespace safari_api.Controllers
     [HttpPut("{id}")]
     public ActionResult<Animal> UpdateAnimal(int id)
     {
-      var db = new DatabaseContext();
       var animal = db.Animals.FirstOrDefault(a => a.Id == id);
       animal.CountOfTimesSeen++;
       db.SaveChanges();
@@ -59,7 +60,6 @@ namespace safari_api.Controllers
     [HttpDelete("{id}")]
     public ActionResult DeleteAnimal(int id)
     {
-      var db = new DatabaseContext();
       var animal = db.Animals.FirstOrDefault(a => a.Id == id);
       db.Animals.Remove(animal);
       db.SaveChanges();
