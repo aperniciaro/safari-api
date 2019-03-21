@@ -14,10 +14,25 @@ namespace safari_api.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ChangeDetector.SkipDetectChanges", "true")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            modelBuilder.Entity("safari_api.Models.Animal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("CountOfTimesSeen");
+
+                    b.Property<string>("LocationOfLastSeen");
+
+                    b.Property<string>("Species");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Animals");
+                });
 #pragma warning restore 612, 618
         }
     }
