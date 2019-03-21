@@ -36,5 +36,14 @@ namespace safari_api.Controllers
 
       return newAnimal;
     }
+
+    [HttpGet("{location}")]
+    public ActionResult<IList<Animal>> GetLocation(string location)
+    {
+      var db = new DatabaseContext();
+      var animalsInLocation = db.Animals.
+        Where(animal => animal.LocationOfLastSeen == location).ToList();
+      return animalsInLocation;
+    }
   }
 }
