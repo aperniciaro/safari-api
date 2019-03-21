@@ -11,24 +11,30 @@ namespace safari_api.Controllers
   [ApiController]
   public class AnimalsController : ControllerBase
   {
-    // GET api/values
     [HttpGet]
-    public ActionResult<IEnumerable<Animal>> Get()
+    public ActionResult<IEnumerable<Animal>> GetAnimals()
     {
-      return new string[] { "value1", "value2" };
+      var db = new DatabaseContext();
+      var results = db.Animals.OrderBy(animal => animal.Species).ToList();
+      return results;
     }
 
-    // GET api/values/5
     [HttpGet("{id}")]
-    public ActionResult<Animal> Get(int id)
+    public ActionResult<Animal> GetAnimal(int id)
     {
-      return "value";
+      var db = new DatabaseContext();
+      var animal = db.Animals.FirstOrDefault(a => a.Id == id);
+      return animal;
     }
 
-    // POST api/values
     [HttpPost]
-    public void Post([FromBody] string species)
+    public ActionResult<Animal> AddAnimal([FromBody] Animal newAnimal)
     {
+      var db = new DatabaseContext();
+      db.Animals.Add(newAnimal);
+      db.SaveChanges();
+
+      return newAnimal;
     }
   }
 }
