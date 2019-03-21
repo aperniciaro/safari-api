@@ -45,5 +45,15 @@ namespace safari_api.Controllers
         Where(animal => animal.LocationOfLastSeen == location).ToList();
       return animalsInLocation;
     }
+
+    [HttpPut("{id}")]
+    public ActionResult<Animal> UpdateAnimal(int id)
+    {
+      var db = new DatabaseContext();
+      var animal = db.Animals.FirstOrDefault(a => a.Id == id);
+      animal.CountOfTimesSeen++;
+      db.SaveChanges();
+      return animal;
+    }
   }
 }
