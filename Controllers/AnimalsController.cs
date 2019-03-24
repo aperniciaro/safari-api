@@ -40,7 +40,7 @@ namespace safari_api.Controllers
       return newAnimal;
     }
 
-    [HttpGet("{location}")]
+    [HttpGet("location={location}")]
     public ActionResult<IList<Animal>> GetLocation(string location)
     {
       var animalsInLocation = db.Animals.
